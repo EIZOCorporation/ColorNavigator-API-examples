@@ -62,7 +62,7 @@ def get_color_mode_information(monitor_id: str, color_mode_index: int):
     URI: '/monitors/{monitor_id}/color-modes/{color_mode_index}'
     Method: GET
 
-    This function sends an HTTP GET request to the specified URI and retrives
+    This function sends an HTTP GET request to the specified URI and retrieves
     information about the color mode at the specified index for the given
     monitor. If successful, it returns a dictionary with color mode data.
     If an error occurs, an empty list is returned.
@@ -83,8 +83,13 @@ def get_color_mode_information(monitor_id: str, color_mode_index: int):
         - "parameters" (dict): The parameters of a Standard or SyncSignal
         type color mode.
     """
-    url = BASE_URL + '/monitors/' + monitor_id + \
-        '/color-modes/' + str(color_mode_index)
+    url = (
+        BASE_URL
+        + '/monitors/'
+        + monitor_id
+        + '/color-modes/'
+        + str(color_mode_index)
+    )
     result = {}
 
     try:
@@ -112,9 +117,9 @@ def get_target_color_mode_index():
     """
     while True:
         try:
-            color_mode_index = int(input(
-                'Please input the target color mode index (0 to 9): '
-            ))
+            color_mode_index = int(
+                input('Please input the target color mode index (0 to 9): ')
+            )
             if 0 <= color_mode_index <= 9:
                 return color_mode_index
             else:
@@ -133,13 +138,12 @@ if __name__ == '__main__':
         serial_number = monitors_list[0]['serialNumber']
         print(f'Target monitor: {model_name} ({serial_number})')
 
-        # Get the infromation of target color mode index from keyboard input
+        # Get the information of target color mode index from keyboard input
         color_mode_index = get_target_color_mode_index()
 
         # Get specified index color mode information
         color_mode_information = get_color_mode_information(
-            monitor_id=monitor_id,
-            color_mode_index=color_mode_index
+            monitor_id=monitor_id, color_mode_index=color_mode_index
         )
 
         if color_mode_information:
@@ -147,7 +151,6 @@ if __name__ == '__main__':
             pprint(color_mode_information)
             print('')
         else:
-            print(
-                f'Failed to get color mode {color_mode_index} information.')
+            print(f'Failed to get color mode {color_mode_index} information.')
     else:
         print('No monitor found.')

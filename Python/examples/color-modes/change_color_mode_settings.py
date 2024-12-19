@@ -57,9 +57,10 @@ def get_connected_monitors():
 
 
 def change_color_mode_settings(
-        monitor_id: str,
-        color_mode_index: int,
-        settings: dict):
+    monitor_id: str,
+    color_mode_index: int,
+    settings: dict
+):
     """Change the settings of specified color mode index.
 
     URI: '/monitors/{monitor_id}/color-modes/{color_mode_index}'
@@ -78,8 +79,13 @@ def change_color_mode_settings(
         None: Prints a success message if the request is successful.
         Otherwise, print error message.
     """
-    url = BASE_URL + '/monitors/' + monitor_id + \
-        '/color-modes/' + str(color_mode_index)
+    url = (
+        BASE_URL
+        + '/monitors/'
+        + monitor_id
+        + '/color-modes/'
+        + str(color_mode_index)
+    )
     request = Request(
         url,
         data=json.dumps(settings).encode('utf-8'),
@@ -91,8 +97,9 @@ def change_color_mode_settings(
         with urlopen(request) as response:
             if response.status == 204:
                 print(
-                    'Success to change color mode ' +
-                    f'{color_mode_index} settings.')
+                    'Success to change color mode '
+                    + f'{color_mode_index} settings.'
+                )
     except HTTPError as e:
         response_body = json.loads(e.read())
         error_message = response_body['message']
@@ -112,9 +119,9 @@ def get_target_color_mode_index():
     """
     while True:
         try:
-            color_mode_index = int(input(
-                'Please input the target color mode index (0 to 9): '
-            ))
+            color_mode_index = int(
+                input('Please input the target color mode index (0 to 9): ')
+            )
             if 0 <= color_mode_index <= 9:
                 return color_mode_index
             else:
@@ -173,9 +180,9 @@ if __name__ == '__main__':
                 'gamut': {
                     'type': 'STANDARD',
                     'value': 'BT_709',
-                    'clipping': True
-                }
-            }
+                    'clipping': True,
+                },
+            },
         }
 
         # Ask whether it is ok to change the color mode settings.
@@ -186,7 +193,7 @@ if __name__ == '__main__':
             change_color_mode_settings(
                 monitor_id=monitor_id,
                 color_mode_index=color_mode_index,
-                settings=settings
+                settings=settings,
             )
         else:
             print('Cancel to change the color mode settings.')

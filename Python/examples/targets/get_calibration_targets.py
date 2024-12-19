@@ -116,9 +116,7 @@ if __name__ == '__main__':
         print(f'Target monitor: {model_name} ({serial_number})')
 
         # Get all calibration targets information
-        calibration_targets = get_calibration_targets(
-            monitor_id=monitor_id
-        )
+        calibration_targets = get_calibration_targets(monitor_id=monitor_id)
 
         if calibration_targets:
             print(f'{len(calibration_targets)} targets were found.')

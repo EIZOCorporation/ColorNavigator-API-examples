@@ -63,9 +63,10 @@ def get_connected_monitors():
 
 
 def change_pixel_inspection_marker_state(
-        monitor_id: str,
-        state: PixelInspectionMarkerState,
-        coordinates: tuple[int, int] | None = None):
+    monitor_id: str,
+    state: PixelInspectionMarkerState,
+    coordinates: tuple[int, int] | None = None,
+):
     """Change the cross marker state of pixel inspection at the specified
     coordinate for a given monitor.
 
@@ -89,15 +90,10 @@ def change_pixel_inspection_marker_state(
         Otherwise, print error message.
     """
     url = BASE_URL + '/monitors/' + monitor_id + '/pixel-inspection/marker'
-    data = {
-        'marker': state.value
-    }
+    data = {'marker': state.value}
 
     if state == PixelInspectionMarkerState.SHOW:
-        data['position'] = {
-            'x': coordinates[0],
-            'y': coordinates[1]
-        }
+        data['position'] = {'x': coordinates[0], 'y': coordinates[1]}
 
     request = Request(
         url,
@@ -126,21 +122,21 @@ def change_pixel_inspection_marker_state(
 
 
 def get_target_pixel_coordinates():
-    """Prompts the user to input the x and y coorinate information of
+    """Prompts the user to input the x and y coordinate information of
     target pixel.
 
     Returns:
-        tuple[int, int]: A tuple which contains x and y coorinate
+        tuple[int, int]: A tuple which contains x and y coordinate
         information of target pixel.
     """
     while True:
         try:
-            x_coordinate = int(input(
-                'Please input the x coorinate information of target pixel: '
-            ))
-            y_coordinate = int(input(
-                'Please input the y coorinate information of target pixel: '
-            ))
+            x_coordinate = int(
+                input('Please input the x coordinate of target pixel: ')
+            )
+            y_coordinate = int(
+                input('Please input the y coordinate of target pixel: ')
+            )
             return x_coordinate, y_coordinate
         except ValueError:
             print('The input value is not a number.')
@@ -160,7 +156,7 @@ if __name__ == '__main__':
         change_pixel_inspection_marker_state(
             monitor_id=monitor_id,
             state=PixelInspectionMarkerState.SHOW,
-            coordinates=get_target_pixel_coordinates()
+            coordinates=get_target_pixel_coordinates(),
         )
 
         # after 3s, hide the cross marker

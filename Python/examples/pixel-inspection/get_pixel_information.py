@@ -57,9 +57,11 @@ def get_connected_monitors():
 
 
 def get_pixel_information(
-        monitor_id: str,
-        coordinates: tuple[int, int],
-        show_marker: bool):
+    monitor_id: str,
+    coordinates: tuple[int, int],
+    show_marker: bool,
+    bit_depth: str,
+):
     """Get pixel information of specified coordinate for a given monitor.
 
     URI: '/monitors/{monitor_id}/pixel-inspection'
@@ -90,8 +92,16 @@ def get_pixel_information(
         on the monitor.
     """
     url = BASE_URL + '/monitors/' + monitor_id + '/pixel-inspection'
-    query = '?x=' + str(coordinates[0]) + '&y=' + str(coordinates[1]) + \
-        '&show-marker=' + str(show_marker).lower()
+    query = (
+        '?x='
+        + str(coordinates[0])
+        + '&y='
+        + str(coordinates[1])
+        + '&show-marker='
+        + str(show_marker).lower()
+        + '&bit-depth='
+        + str(bit_depth).upper()
+    )
     result = {}
 
     try:
@@ -112,21 +122,21 @@ def get_pixel_information(
 
 
 def get_target_pixel_coordinates():
-    """Prompts the user to input the x and y coorinate information of
+    """Prompts the user to input the x and y coordinate information of
     target pixel.
 
     Returns:
-        tuple[int, int]: A tuple which contains x and y coorinate
+        tuple[int, int]: A tuple which contains x and y coordinate
         information of target pixel.
     """
     while True:
         try:
-            x_coordinate = int(input(
-                'Please input the x coorinate information of target pixel: '
-            ))
-            y_coordinate = int(input(
-                'Please input the y coorinate information of target pixel: '
-            ))
+            x_coordinate = int(
+                input('Please input the x coordinate value of target pixel: ')
+            )
+            y_coordinate = int(
+                input('Please input the y coordinate value of target pixel: ')
+            )
             return x_coordinate, y_coordinate
         except ValueError:
             print('The input value is not a number.')
@@ -143,13 +153,41 @@ def confirm_show_marker():
     while True:
         print(
             'Do you want to show the cross marker at the target pixel? ',
-            end='')
+            end='',
+        )
         choice = input('[Y]es/[N]o: ').lower()
 
         if choice in yes_no_dict:
             return yes_no_dict[choice]
         else:
             print('Please input [Y]es/[N]o.')
+
+
+def get_bit_depth_setting():
+    """Prompts the user to choose an output bit depth format.
+
+    Returns:
+        str: The chosen bit depth setting
+        ('AUTO', '8_BIT', '10_BIT', or '12_BIT').
+    """
+    bit_depth_dict = {
+        'a': 'AUTO',
+        '8': '8_BIT',
+        '10': '10_BIT',
+        '12': '12_BIT',
+    }
+
+    while True:
+        print(
+            'Please select the output bit depth format: ',
+            end='',
+        )
+        choice = input('[A]uto/[8]bit/[10]bit/[12]bit: ').lower()
+
+        if choice in bit_depth_dict:
+            return bit_depth_dict[choice]
+        else:
+            print('Please input [A]uto/[8]bit/[10]bit/[12]bit.')
 
 
 if __name__ == '__main__':
@@ -166,7 +204,8 @@ if __name__ == '__main__':
         pixel_information = get_pixel_information(
             monitor_id=monitor_id,
             coordinates=get_target_pixel_coordinates(),
-            show_marker=confirm_show_marker()
+            show_marker=confirm_show_marker(),
+            bit_depth=get_bit_depth_setting(),
         )
 
         if pixel_information:

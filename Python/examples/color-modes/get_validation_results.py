@@ -134,13 +134,19 @@ def get_calibration_results(monitor_id: str, color_mode_index: int):
         - "measurementData" (dict): The measurement data when calibration
         is completed.
         - "executedAt" (str): The execution date information.
-        - "monitorInformation" (dict): The information about montior usage time
+        - "monitorInformation" (dict): The information about monitor usage time
         and DUE priority when calibration is completed.
         - "sensorInformation" (dict): The information of the measurement device
         used for calibration.
     """
-    url = BASE_URL + '/monitors/' + monitor_id + '/color-modes/' + \
-        str(color_mode_index) + '/target/calibration-results'
+    url = (
+        BASE_URL
+        + '/monitors/'
+        + monitor_id
+        + '/color-modes/'
+        + str(color_mode_index)
+        + '/target/calibration-results'
+    )
     result = []
 
     try:
@@ -162,9 +168,10 @@ def get_calibration_results(monitor_id: str, color_mode_index: int):
 
 
 def get_validation_results(
-        monitor_id: str,
-        color_mode_index: int,
-        calibration_result_id: str):
+    monitor_id: str,
+    color_mode_index: int,
+    calibration_result_id: str
+):
     """Get information about specified index color mode validation results
     for a given monitor.
 
@@ -195,14 +202,21 @@ def get_validation_results(
         - "isConvertedMeasurementDataUnderD50Illuminant" (bool): whether the
         measured values are converted to under D50 illuminant.
         - "executedAt" (str): The execution date information.
-        - "monitorInformation" (dict): The information about montior usage time
+        - "monitorInformation" (dict): The information about monitor usage time
         and DUE priority when calibration is completed.
         - "sensorInformation" (dict): The information of the measurement device
         used for calibration.
     """
-    url = BASE_URL + '/monitors/' + monitor_id + '/color-modes/' + \
-        str(color_mode_index) + '/target/calibration-results/' + \
-        str(calibration_result_id) + '/validation-results'
+    url = (
+        BASE_URL
+        + '/monitors/'
+        + monitor_id
+        + '/color-modes/'
+        + str(color_mode_index)
+        + '/target/calibration-results/'
+        + str(calibration_result_id)
+        + '/validation-results'
+    )
     result = []
 
     try:
@@ -246,25 +260,26 @@ if __name__ == '__main__':
                     # Get calibration results
                     cal_results = get_calibration_results(
                         monitor_id=monitor_id,
-                        color_mode_index=color_mode_index
+                        color_mode_index=color_mode_index,
                     )
 
                     if cal_results:
                         for cal_result in cal_results:
-                            cal_result_id = cal_result.get(
-                                'id')
+                            cal_result_id = cal_result.get('id')
                             val_results = get_validation_results(
                                 monitor_id=monitor_id,
                                 color_mode_index=color_mode_index,
-                                calibration_result_id=cal_result_id
+                                calibration_result_id=cal_result_id,
                             )
 
                             # if validation results exists, print all result.
                             if val_results:
                                 print(f"{'=' * 80}")
-                                print(f'Find {len(val_results)} ' +
-                                      'validation result(s). at calibration ' +
-                                      f'result id: {cal_result_id}')
+                                print(
+                                    f'Find {len(val_results)} '
+                                    + 'validation result(s). at calibration '
+                                    + f'result id: {cal_result_id}'
+                                )
 
                                 for index, result in enumerate(val_results):
                                     print(f'Validation result {index}:')

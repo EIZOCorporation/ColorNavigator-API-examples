@@ -70,8 +70,9 @@ def get_connected_monitors():
 
 
 def change_key_lock_setting(
-        monitor_id: str,
-        key_lock_setting: KeyLockSetting):
+    monitor_id: str,
+    key_lock_setting: KeyLockSetting
+):
     """Change the key lock setting for a given monitor.
 
     URI: '/monitors/{monitor_id}/key-lock'
@@ -101,8 +102,10 @@ def change_key_lock_setting(
     try:
         with urlopen(request) as response:
             if response.status == 204:
-                print('Success to change the key lock setting to ' +
-                      f'"{key_lock_setting.value}".')
+                print(
+                    'Success to change the key lock setting to '
+                    + f'"{key_lock_setting.value}".'
+                )
     except HTTPError as e:
         response_body = json.loads(e.read())
         error_message = response_body['message']

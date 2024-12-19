@@ -134,13 +134,19 @@ def get_calibration_results(monitor_id: str, color_mode_index: int):
         - "measurementData" (dict): The measurement data when calibration
         is completed.
         - "executedAt" (str): The execution date information.
-        - "monitorInformation" (dict): The information about montior usage time
+        - "monitorInformation" (dict): The information about monitor usage time
         and DUE priority when calibration is completed.
         - "sensorInformation" (dict): The information of the measurement device
         used for calibration.
     """
-    url = BASE_URL + '/monitors/' + monitor_id + '/color-modes/' + \
-        str(color_mode_index) + '/target/calibration-results'
+    url = (
+        BASE_URL
+        + '/monitors/'
+        + monitor_id
+        + '/color-modes/'
+        + str(color_mode_index)
+        + '/target/calibration-results'
+    )
     result = []
 
     try:
@@ -183,14 +189,16 @@ if __name__ == '__main__':
                     # Get calibration results
                     cal_results = get_calibration_results(
                         monitor_id=monitor_id,
-                        color_mode_index=color_mode_index
+                        color_mode_index=color_mode_index,
                     )
 
                     # if calibration results exists, print all result.
                     if cal_results:
                         print(f"{'=' * 80}")
-                        print(f'Find {len(cal_results)} calibration ' +
-                              f'result(s) at color mode {color_mode_index}.')
+                        print(
+                            f'Find {len(cal_results)} calibration '
+                            + f'result(s) at color mode {color_mode_index}.'
+                        )
 
                         for index, result in enumerate(cal_results):
                             print(f'Calibration result {index}:')

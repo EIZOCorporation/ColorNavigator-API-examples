@@ -69,8 +69,9 @@ def get_connected_monitors():
 
 
 def change_selfcalibration_execution_state(
-        monitor_id: str,
-        action: SelfCalibrationAction):
+    monitor_id: str,
+    action: SelfCalibrationAction
+):
     """Change the execution state of SelfCalibration for a given monitor.
 
     URI: '/monitors/{monitor_id}/selfcalibration/execution'

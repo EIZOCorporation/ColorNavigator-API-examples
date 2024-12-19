@@ -57,8 +57,9 @@ def get_connected_monitors():
 
 
 def create_calibration_target(
-        monitor_id: str,
-        settings: dict):
+    monitor_id: str,
+    settings: dict
+):
     """Create a new calibration target with the provided settings values.
 
     URI: '/monitors/{monitor_id}/targets'
@@ -118,27 +119,29 @@ if __name__ == '__main__':
                 'whitePoint': {'type': 'TEMPERATURE', 'value': 6500},
                 'gamma': {'type': 'GAMMA', 'value': 2.2},
                 'gamut': {
-                    'type': 'STANDARD', 'value': 'ADOBE_RGB', 'clipping': False
+                    'type': 'STANDARD',
+                    'value': 'ADOBE_RGB',
+                    'clipping': False,
                 },
                 'calibrationPolicy': 'GRAY_BALANCE',
                 'sixColors': {
-                    "red": {"hue": 0, "saturation": 0, "lightness": 0},
-                    "green": {"hue": 0, "saturation": 0, "lightness": 0},
-                    "blue": {"hue": 0, "saturation": 0, "lightness": 0},
-                    "cyan": {"hue": 0, "saturation": 0, "lightness": 0},
-                    "magenta": {"hue": 0, "saturation": 0, "lightness": 0},
-                    "yellow": {"hue": 0, "saturation": 0, "lightness": 0}
+                    'red': {'hue': 0, 'saturation': 0, 'lightness': 0},
+                    'green': {'hue': 0, 'saturation': 0, 'lightness': 0},
+                    'blue': {'hue': 0, 'saturation': 0, 'lightness': 0},
+                    'cyan': {'hue': 0, 'saturation': 0, 'lightness': 0},
+                    'magenta': {'hue': 0, 'saturation': 0, 'lightness': 0},
+                    'yellow': {'hue': 0, 'saturation': 0, 'lightness': 0},
                 },
-                'optimizeForLimited109': False
+                'optimizeForLimited109': False,
             },
             'profileUpdateRule': 'EVERYTIME',
             'profilePolicy': {
                 'profileVersion': "4.2",
                 'toneCurve': 'LUT',
-                'reflectBlackLevel': True
+                'reflectBlackLevel': True,
             },
             'useTargetNameAsProfileName': False,
-            'protection': False
+            'protection': False,
         }
 
         print('Create a new calibration target with the following content.')

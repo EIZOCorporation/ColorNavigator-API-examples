@@ -56,7 +56,7 @@ def get_connected_monitors():
 
 
 def change_current_color_mode(monitor_id: str, color_mode_index: int):
-    """ Changes current color mode to the specified color mode index.
+    """Changes current color mode to the specified color mode index.
 
     URI: '/monitors/{monitor_id}/color-modes/selected-index'
     Method: PUT
@@ -85,8 +85,9 @@ def change_current_color_mode(monitor_id: str, color_mode_index: int):
         with urlopen(request) as response:
             if response.status == 200:
                 print(
-                    'Success to change the color mode index to ' +
-                    f'{color_mode_index}.')
+                    'Success to change the color mode index to '
+                    + f'{color_mode_index}.'
+                )
     except HTTPError as e:
         response_body = json.loads(e.read())
         error_message = response_body['message']
@@ -106,9 +107,9 @@ def get_target_color_mode_index():
     """
     while True:
         try:
-            color_mode_index = int(input(
-                'Please input the target color mode index (0 to 9): '
-            ))
+            color_mode_index = int(
+                input('Please input the target color mode index (0 to 9): ')
+            )
             if 0 <= color_mode_index <= 9:
                 return color_mode_index
             else:
@@ -127,7 +128,7 @@ if __name__ == '__main__':
         serial_number = monitors_list[0]['serialNumber']
         print(f'Target monitor: {model_name} ({serial_number})')
 
-        # Get the infromation of target color mode index from keyboard input
+        # Get the information of target color mode index from keyboard input
         color_mode_index = get_target_color_mode_index()
 
         # Change current color mode to specified index.
